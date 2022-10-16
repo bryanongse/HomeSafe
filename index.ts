@@ -170,6 +170,7 @@ function initMap(): void {
   marker1 = new google.maps.Marker({
     map,
     draggable: false,
+    animation: google.maps.Animation.DROP,
     position: pathCoord[0],
   });
 
