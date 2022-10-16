@@ -10,7 +10,7 @@ CORS(app)
 
 API_KEY = "dc9fe71e-c95e-47d9-9e40-e01d09ee4bc0"
 ENDPOINT = f"https://graphhopper.com/api/1/route?key={API_KEY}"
-MAX_ZONES = 10
+MAX_ZONES = 4000
 
 DEG_PER_METER = 10**-5  # roughly lol
 RECT_SIZE = 10 * DEG_PER_METER  # meters

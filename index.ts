@@ -22,7 +22,6 @@ function coordinateToLatLng(a){
 };
 
 function coordinateToLatLngHM(a){
-  // let b: google.maps.LatLng[];
   var b;
   b = [];
 
@@ -42,14 +41,12 @@ function initMap(): void {
       zoom: 12,
     }
   );
-  
+
   // Create the search box and link it to the UI element.
   const input = document.getElementById("pac-input") as HTMLInputElement;
   const input2 = document.getElementById("pac-input2") as HTMLInputElement;
   const searchBox = new google.maps.places.SearchBox(input);
   const searchBox2 = new google.maps.places.SearchBox(input2);
-
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener("bounds_changed", () => {
@@ -64,7 +61,6 @@ function initMap(): void {
   // more details for that place.
   searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
-    console.log(places)
 
     if (places.length == 0) {
       return;
@@ -77,7 +73,7 @@ function initMap(): void {
     start = [];
 
     // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
+    const bounds = map.getBounds();
 
     places.forEach((place) => {
       if (!place.geometry || !place.geometry.location) {
@@ -106,7 +102,6 @@ function initMap(): void {
 
   searchBox2.addListener("places_changed", () => {
     const places2 = searchBox2.getPlaces();
-    console.log(places2)
 
     if (places2.length == 0) {
       return;
@@ -119,7 +114,7 @@ function initMap(): void {
     end = [];
 
     // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
+    const bounds = map.getBounds();
 
     places2.forEach((place) => {
       if (!place.geometry || !place.geometry.location) {
@@ -145,19 +140,6 @@ function initMap(): void {
     });
     map.fitBounds(bounds);
   });
-  
-  
-
-  /*
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: coordinateToLatLngHM(coodinatesHeat()),
-    // data: coodinatesHeat2(),
-    map: map,
-  });
- */
-
-
-  let pathCoord = coordinatesHeat2();
 
   poly = new google.maps.Polyline({
     strokeColor: "#FF0000",
@@ -166,70 +148,67 @@ function initMap(): void {
     map: map,
   });
 
-  poly.setPath(pathCoord);
+  document.getElementById("calc-route").addEventListener("click", () => {
+    const marker1Pos = start[0].getPosition();
+    const marker2Pos = end[0].getPosition();
+    const points = {"points": [[marker1Pos.lng(), marker1Pos.lat()],
+        [marker2Pos.lng(), marker2Pos.lat()]]};
 
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-    document.getElementById("info") as HTMLElement
-  );
+    fetch("http://127.0.0.1:5000/route", {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(points)
+    }).then((response) => response.json()).then((data) => {
+        let path: google.maps.LatLng[] = [];
+        for (let i = 0; i < data.length; i++) {
+            path.push(new google.maps.LatLng(data[i][1], data[i][0]));
+        }
 
-  marker1 = new google.maps.Marker({
-    map,
-    animation: google.maps.Animation.DROP,
-    position: pathCoord[0],
+        poly.setPath(path);
+    });
   });
 
-  marker2 = new google.maps.Marker({
-    map,
-    draggable: true,
-    position: pathCoord[pathCoord.length-1],
+    fetch("http://127.0.0.1:5000/get_points", {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+    }).then((response) => response.json()).then((data) => {
+        let points = [];
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+            points.push({location: new google.maps.LatLng(data[i].point[0], data[i].point[1]), weight: 1 - data[i].safety});
+        }
+        console.log(points);
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: points,
+          map: map,
+          dissipating: false,
+          radius: 10,
+          opacity: 0.7,
+          //maxIntensity: 0
+        });
+    })
+        /*
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: coordinateToLatLngHM(coodinatesHeat()),
+    // data: coodinatesHeat2(),
+    map: map,
   });
-
-  const bounds = new google.maps.LatLngBounds(
-    marker1.getPosition() as google.maps.LatLng,
-    marker2.getPosition() as google.maps.LatLng
-  );
-
-  map.fitBounds(bounds);
-
-  const marker1Pos = marker1.getPosition();
-  const marker2Pos = marker2.getPosition();
-  const points = {"points": [[marker1Pos.lng(), marker1Pos.lat()],
-      [marker2Pos.lng(), marker2Pos.lat()]]};
-  fetch("http://127.0.0.1:5000/route", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(points)
-  }).then((response) => response.json()).then((data) => {
-      let path: google.maps.LatLng[] = [];
-      for (let i = 0; i < data.length; i++) {
-          path.push(new google.maps.LatLng(data[i][1], data[i][0]));
-      }
-      poly.setPath(path);
-  });
-
-  //google.maps.event.addListener(marker1, "position_changed", update);
-  //google.maps.event.addListener(marker2, "position_changed", update);
-
-
-  // geodesicPoly = new google.maps.Polyline({
-  //   strokeColor: "#CC0099",
-  //   strokeOpacity: 1.0,
-  //   strokeWeight: 3,
-  //   geodesic: true,
-  //   map: map,
-  // });
+ */
 
   update();
 }
 
 function update() {
-  const path = [
-    marker1.getPosition() as google.maps.LatLng,
-    marker2.getPosition() as google.maps.LatLng,
-  ];
+  //const path = [
+  //  marker1.getPosition() as google.maps.LatLng,
+  //  marker2.getPosition() as google.maps.LatLng,
+  //];
 
   // // poly.setPath(path);
   // // geodesicPoly.setPath(path);
@@ -241,12 +220,12 @@ function update() {
 
   // (document.getElementById("heading") as HTMLInputElement).value =
   //   String(heading);
-  (document.getElementById("origin") as HTMLInputElement).value = String(
-    path[0]
-  );
-  (document.getElementById("destination") as HTMLInputElement).value = String(
-    path[1]
-  );
+  //(document.getElementById("origin") as HTMLInputElement).value = String(
+  //  path[0]
+  //);
+  //(document.getElementById("destination") as HTMLInputElement).value = String(
+  //  path[1]
+  //);
 }
 
 declare global {
