@@ -57,7 +57,8 @@ function initMap(): void {
     searchBox2.setBounds(map.getBounds() as google.maps.LatLngBounds);
   });
 
-  let markers: google.maps.Marker[] = [];
+  let start: google.maps.Marker[] = [];
+  let end: google.maps.Marker[] = [];
 
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
@@ -70,10 +71,10 @@ function initMap(): void {
     }
 
     // Clear out the old markers.
-    // markers.forEach((marker) => {
-    //   marker.setMap(null);
-    // });
-    // markers = [];
+    start.forEach((start) => {
+      start.setMap(null);
+    });
+    start = [];
 
     // For each place, get the icon, name and location.
     const bounds = new google.maps.LatLngBounds();
@@ -93,10 +94,9 @@ function initMap(): void {
       };
 
       // Create a marker for each place.
-      markers.push(
+      start.push(
         new google.maps.Marker({
           map,
-          icon,
           title: place.name,
           position: place.geometry.location,
         })
@@ -121,10 +121,10 @@ function initMap(): void {
     }
 
     // Clear out the old markers.
-    // markers.forEach((marker) => {
-    //   marker.setMap(null);
-    // });
-    // markers = [];
+    end.forEach((end) => {
+      end.setMap(null);
+    });
+    end = [];
 
     // For each place, get the icon, name and location.
     const bounds = new google.maps.LatLngBounds();
@@ -144,10 +144,9 @@ function initMap(): void {
       };
 
       // Create a marker for each place.
-      markers.push(
+      end.push(
         new google.maps.Marker({
           map,
-          icon,
           title: place.name,
           position: place.geometry.location,
         })
@@ -162,6 +161,7 @@ function initMap(): void {
     });
     map.fitBounds(bounds);
   });
+  
 
   /*
   heatmap = new google.maps.visualization.HeatmapLayer({
