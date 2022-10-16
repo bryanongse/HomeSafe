@@ -16,7 +16,7 @@ DEG_PER_METER = 10**-5  # roughly lol
 RECT_SIZE = 10 * DEG_PER_METER  # meters
 
 with open("zones.json") as data:
-    zones = json.loads(data.read())[:MAX_ZONES]
+    zones = json.loads(data.read())  # [:MAX_ZONES]
 
 areas = {
     f"area{i}": {
@@ -49,7 +49,7 @@ areas = {
             ],
         },
     }
-    for i, area in enumerate(zones)
+    for i, area in enumerate(zones[:MAX_ZONES])
 }
 
 # SAFETY_PRIORITY = 0.5
@@ -63,7 +63,7 @@ def get_priority(safety_priority):
             if safety_priority != 0
             else "1",
         }
-        for i, area in enumerate(zones)
+        for i, area in enumerate(zones[:MAX_ZONES])
     ]
 
 
@@ -89,5 +89,7 @@ def route():
     payload["points"] = data["points"]
     payload["custom_model"]["priority"] = get_priority(data["safety_priority"])
     resp = requests.post(ENDPOINT, json=payload)
+    print(resp.text)
     points = json.loads(resp.text)
     return jsonify(points["paths"][0]["points"]["coordinates"])
+

@@ -7,31 +7,45 @@
     <script type="module" src="./index.ts"></script>
   </head>
   <body>
+    <!-- this will show our spinner -->
+    <div hidden id="spinner"></div>
     <div id="map"></div>
     <div id="floating-panel">
       <!-- <h1>Home Safe</h1> -->
     <img class="logo" src="homesafe.png"><img/><br />
-      <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-      <input
-          id="pac-input"
-          class="controls"
-          type="text"
-          placeholder="Starting"
-        /><br />
+    <i class="fa fa-circle-o" aria-hidden="true"></i>
+    <input
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Starting"
+      /><br />
       <!-- Origin: <input type="text" id="origin" /><br /> -->
       <!-- Destination: <input type="text" id="destination" /><br /> -->
     <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
-     <input
-          id="pac-input2"
-          class="controls"
-          type="text"
-          placeholder="Destination"
-        /><br />
+    <input
+        id="pac-input2"
+        class="controls"
+        type="text"
+        placeholder="Destination"
+      /><br />
+      
       <!-- <input id="routeButton" type="submit" value="Get Me Home Safe" /><br /> -->
-      <button id="calc-route" class="button-2" type="submit" role="button">Get Me Home Safe</button>
+      <button id="calc-route" class="button-2" type="submit" role="button">Get Me Home Safe</button><br/>
+
+      <!-- <button id="toggle-heatmap" class="button-2">Toggle Heatmap</button><br/> -->
+      <div class="inline">
+        <h3>Toggle HeatMap</h3>
+        <input class="toggle" id="toggle-heatmap" type="checkbox" />
+      </div>
+    
 
       <div class="slidecontainer">
-        <input type="range" min="0" max="100" value="50" class="slider" id="safety-priority">
+        <input type="range" min="0" max="100" value="50" class="slider" id="safety-priority"><br/>
+        <div class="sliderText">
+          <h3>Faster</h3>
+          <h3>Safer</h3>
+        </div>
       </div>
 
     </div>

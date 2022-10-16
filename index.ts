@@ -2,6 +2,8 @@ let marker1: google.maps.Marker, marker2: google.maps.Marker;
 let poly: google.maps.Polyline, geodesicPoly: google.maps.Polyline;
 let map: google.maps.Map, heatmap: google.maps.visualization.HeatmapLayer;
 
+
+
 function coordinatesHeat2(){
   return [
     new google.maps.LatLng(37.782551, -122.445368),
@@ -38,8 +40,8 @@ function initMap(): void {
     document.getElementById("map") as HTMLElement,
     {
       center: {lat: 37.868683, lng: -122.259131},
-      zoom: 12,
       mapTypeId: "OSM",
+      zoom: 12,
       styles: [
         { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
@@ -123,23 +125,23 @@ function initMap(): void {
     }
   );
 
-    map.mapTypes.set("OSM", new google.maps.ImageMapType({
-                getTileUrl: function(coord, zoom) {
-                    // "Wrap" x (longitude) at 180th meridian properly
-                    // NB: Don't touch coord.x: because coord param is by reference, and changing its x property breaks something in Google's lib
-                    var tilesPerGlobe = 1 << zoom;
-                    var x = coord.x % tilesPerGlobe;
-                    if (x < 0) {
-                        x = tilesPerGlobe+x;
-                    }
-                    // Wrap y (latitude) in a like manner if you want to enable vertical infinite scrolling
+  map.mapTypes.set("OSM", new google.maps.ImageMapType({
+    getTileUrl: function(coord, zoom) {
+        // "Wrap" x (longitude) at 180th meridian properly
+        // NB: Don't touch coord.x: because coord param is by reference, and changing its x property breaks something in Google's lib
+        var tilesPerGlobe = 1 << zoom;
+        var x = coord.x % tilesPerGlobe;
+        if (x < 0) {
+            x = tilesPerGlobe+x;
+        }
+        // Wrap y (latitude) in a like manner if you want to enable vertical infinite scrolling
 
-                    return "https://tile.openstreetmap.org/" + zoom + "/" + x + "/" + coord.y + ".png";
-                },
-                tileSize: new google.maps.Size(256, 256),
-                name: "OpenStreetMap",
-                maxZoom: 18
-            }));
+        return "https://tile.openstreetmap.org/" + zoom + "/" + x + "/" + coord.y + ".png";
+    },
+    tileSize: new google.maps.Size(256, 256),
+    name: "OpenStreetMap",
+    maxZoom: 18
+}));
 
   // Create the search box and link it to the UI element.
   const input = document.getElementById("pac-input") as HTMLInputElement;
@@ -247,7 +249,12 @@ function initMap(): void {
     map: map,
   });
 
+  const spinner = document.getElementById("spinner");
+
   document.getElementById("calc-route").addEventListener("click", () => {
+    spinner.removeAttribute('hidden');
+    console.log("test")
+
     const marker1Pos = start[0].getPosition();
     const marker2Pos = end[0].getPosition();
     const points = {"points": [[marker1Pos.lng(), marker1Pos.lat()],
@@ -264,11 +271,11 @@ function initMap(): void {
         },
         body: JSON.stringify(points)
     }).then((response) => response.json()).then((data) => {
+        spinner.setAttribute('hidden', '');
         let path: google.maps.LatLng[] = [];
         for (let i = 0; i < data.length; i++) {
             path.push(new google.maps.LatLng(data[i][1], data[i][0]));
         }
-
         poly.setPath(path);
     });
   });
@@ -294,7 +301,15 @@ function initMap(): void {
           opacity: 0.7,
           maxIntensity: 10
         });
+        document
+          .getElementById("toggle-heatmap")
+          .addEventListener("click", toggleHeatmap);
     })
+
+    function toggleHeatmap() {
+      heatmap.setMap(heatmap.getMap() ? null : map);
+    }
+
         /*
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: coordinateToLatLngHM(coodinatesHeat()),
@@ -305,6 +320,7 @@ function initMap(): void {
 
   update();
 }
+
 
 function update() {
   //const path = [
