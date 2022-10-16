@@ -162,6 +162,7 @@ function initMap(): void {
     map.fitBounds(bounds);
   });
   
+  
 
   /*
   heatmap = new google.maps.visualization.HeatmapLayer({
