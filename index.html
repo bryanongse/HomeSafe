@@ -11,10 +11,15 @@
         Origin: <input type="text" id="origin" /><br />
         Destination: <input type="text" id="destination" /><br />
         <input type="submit" /><br />
+        <input
+          id="pac-input"
+          class="controls"
+          type="text"
+          placeholder="Search Box"
+        />
     </div>
-
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXO-e8sWvoUiLG5euYdCRM1PMTP36ODK4&callback=initMap&libraries=visualization&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXO-e8sWvoUiLG5euYdCRM1PMTP36ODK4&callback=initMap&libraries=visualization,places&v=weekly"
     defer
   ></script>
   </body>
