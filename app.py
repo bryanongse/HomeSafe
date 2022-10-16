@@ -52,6 +52,8 @@ areas = {
     for i, area in enumerate(zones[:MAX_ZONES])
 }
 
+# SAFETY_PRIORITY = 0.5
+
 
 def get_priority(safety_priority):
     return [
@@ -87,5 +89,7 @@ def route():
     payload["points"] = data["points"]
     payload["custom_model"]["priority"] = get_priority(data["safety_priority"])
     resp = requests.post(ENDPOINT, json=payload)
+    print(resp.text)
     points = json.loads(resp.text)
     return jsonify(points["paths"][0]["points"]["coordinates"])
+
