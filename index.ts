@@ -45,13 +45,16 @@ function initMap(): void {
   
   // Create the search box and link it to the UI element.
   const input = document.getElementById("pac-input") as HTMLInputElement;
+  const input2 = document.getElementById("pac-input2") as HTMLInputElement;
   const searchBox = new google.maps.places.SearchBox(input);
+  const searchBox2 = new google.maps.places.SearchBox(input2);
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener("bounds_changed", () => {
     searchBox.setBounds(map.getBounds() as google.maps.LatLngBounds);
+    searchBox2.setBounds(map.getBounds() as google.maps.LatLngBounds);
   });
 
   let markers: google.maps.Marker[] = [];
@@ -60,6 +63,7 @@ function initMap(): void {
   // more details for that place.
   searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
+    console.log(places)
 
     if (places.length == 0) {
       return;
