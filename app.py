@@ -2,8 +2,10 @@ import json
 
 import requests
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
 API_KEY = "dc9fe71e-c95e-47d9-9e40-e01d09ee4bc0"

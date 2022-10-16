@@ -115,11 +115,7 @@ function NavBar(props) {
 
       //make sure to serialize your JSON body
       body: JSON.stringify(longLat),
-    }).then((response) => {
-      //do something awesome that makes the world a better place
-      console.log("test");
-      console.log(response);
-    });
+    }).then((response) => { console.log(response); return response.json(); }).then((data) => { console.log(data); return data; });
   };
 
   // when SearchBar changes -> SBLabels and SearchBarRemoval changes
@@ -303,16 +299,27 @@ function NavBar(props) {
         </Button>
         <Button
           disabled={props.markers.length < 2}
-          onClick={() => {
+          onClick={async () => {
             routeHandler(true);
             setLngLat({
-              pointers: [
+              points: [
                 [props.markers[0]["lng"], props.markers[0]["lat"]],
                 [props.markers[1]["lng"], props.markers[1]["lat"]],
               ],
             });
             // console.log(lngLat);
-            getPath(lngLat);
+
+            console.log("clicked");
+            await getPath(lngLat).then((path) => {
+                console.log(path);
+                const route = path.map((point) => ({
+                    lat: point[1],
+                    lng: point[0],
+                }));
+                console.log(route);
+                props.setrouteLatlngs(route);
+            });
+            console.log("done");
           }}
         >
           Done
