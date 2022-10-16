@@ -187,10 +187,10 @@ function initMap(): void {
         heatmap = new google.maps.visualization.HeatmapLayer({
           data: points,
           map: map,
-          dissipating: false,
-          radius: 10,
+          dissipating: true,
+          radius: 40,
           opacity: 0.7,
-          //maxIntensity: 0
+          maxIntensity: 10
         });
     })
         /*
