@@ -158,6 +158,22 @@ function initMap(): void {
   let start: google.maps.Marker[] = [];
   let end: google.maps.Marker[] = [];
 
+  const loader = document.querySelector("#loading");
+
+// showing loading
+function displayLoading() {
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 5000);
+}
+
+// hiding loading 
+function hideLoading() {
+    loader.classList.remove("display");
+}
+
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   searchBox.addListener("places_changed", () => {
@@ -249,11 +265,8 @@ function initMap(): void {
     map: map,
   });
 
-  const spinner = document.getElementById("spinner");
-
   document.getElementById("calc-route").addEventListener("click", () => {
-    spinner.removeAttribute('hidden');
-    console.log("test")
+    displayLoading()
 
     const marker1Pos = start[0].getPosition();
     const marker2Pos = end[0].getPosition();
@@ -270,8 +283,8 @@ function initMap(): void {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(points)
-    }).then((response) => response.json()).then((data) => {
-        spinner.setAttribute('hidden', '');
+     }).then((response) => response.json()).then((data) => {
+        hideLoading()
         let path: google.maps.LatLng[] = [];
         for (let i = 0; i < data.length; i++) {
             path.push(new google.maps.LatLng(data[i][1], data[i][0]));

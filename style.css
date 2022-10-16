@@ -213,33 +213,31 @@ body {
   left: 32px;
 }
 
-#spinner:not([hidden]) {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#spinner::after {
-  content: "";
-  width: 80px;
-  height: 80px;
-  border: 2px solid #f3f3f3;
-  border-top: 3px solid #f25a41;
+#loading {
+  width: 2rem;
+  height: 2rem;
+  border: 5px solid #f3f3f3;
+  border-top: 6px solid #9c41f2;
   border-radius: 100%;
-  will-change: transform;
-  animation: spin 1s infinite linear
-}
+  margin: auto;
+  visibility: hidden;
+  animation: spin 1s infinite linear;
+  z-index: 99;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
 
+}
+#loading.display {
+  visibility: visible;
+}
 @keyframes spin {
   from {
-    transform: rotate(0deg);
+      transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+      transform: rotate(360deg);
   }
 }
