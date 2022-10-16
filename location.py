@@ -3,6 +3,20 @@ import cohere
 import pprint
 from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
+import pyttsx3
+import speech_recognition as sr
+
+##### Speech to Text Var
+r = sr.Recognizer()
+engine = pyttsx3.init()
+
+def speechToText(filename):
+    with sr.AudioFile(filename) as source:
+        audio_data = r.record(source)
+        text = r.recognize_google(audio_data)
+        return text
+
+text = speechToText(stream)
 
 api_key = 'ubrYIiK7ptgJ6UdrWTMxVYBsastwkbp7ulstaeHE'
 co = cohere.Client(api_key)
