@@ -1,0 +1,93 @@
+.root{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: 'Montserrat';
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgb(18, 35, 105);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  opacity: 1;
+  background-color: rgb(18, 35, 105);
+  border-bottom: 1px solid #D3D3D3;
+}
+
+.titleIcon {
+  padding: 3%;
+  font-size: 24px;
+}
+
+.titleName {
+  font-weight: bold;
+  font-size: 24px;
+  padding-right: 40%;
+  color: white;
+}
+
+.titleSignOut{
+  position: absolute;
+  right: 0;
+}
+
+.navBarContent {
+  margin-top: 10px;
+  overflow-y: auto;
+}
+
+.routeCreation {
+  background-color: white;
+  opacity: 1;
+  z-index: 100;
+  position: sticky;
+  top: 0;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #D3D3D3;
+}
+
+.search {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.SBLabels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-top: 3%;
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.searchBarRemoval {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.searchBarButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 20px;
+}
+
+
+
+.body {
+  height: 100vh;
+  width: 100%;
+}

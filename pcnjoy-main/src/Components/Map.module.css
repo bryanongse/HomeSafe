@@ -1,0 +1,13 @@
+.infoWindow {
+    word-wrap: break-word;
+    width: auto;
+}
+
+.buttons {
+    display: flex;
+    align-items: left;
+}
+
+Button {
+    margin-right: 10px;
+}

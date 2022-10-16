@@ -1,0 +1,5 @@
+.searchBar {
+    z-index: 101;
+    list-style-type: none; /* Remove bullets */
+    padding: 10;
+}
