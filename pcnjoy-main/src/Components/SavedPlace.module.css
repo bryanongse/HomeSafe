@@ -1,0 +1,10 @@
+.buttons {
+    word-break: break-all;
+}
+
+.indivButton {
+    text-decoration: none;
+    border: none;
+    width: 150px;
+    text-align: left;
+}

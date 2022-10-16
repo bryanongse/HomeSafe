@@ -1,0 +1,42 @@
+.root {
+  position: relative;
+  font-family: 'Montserrat';
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.alertShow {
+  opacity: 1;
+  transition: all 500ms linear;
+  z-index: 3;
+  position: absolute;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  box-shadow: 1px 0px 20px 1px black;
+}
+
+.alertHide {
+  opacity: 0;
+  transition: all 500ms linear 3s;
+  z-index: 3;
+  position: absolute;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  box-shadow: 1px 0px 10px 1px black;
+}
+
+.NavBar {
+  position: absolute;
+  background-color: white;
+  width: 30%;
+  height: 100%;
+  margin: 0 auto;
+  box-shadow: 1px 0px 10px 1px black;
+  overflow: hidden;
+}
+

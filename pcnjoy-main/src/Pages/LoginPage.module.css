@@ -1,0 +1,89 @@
+.root {
+    background-image: url("./background-login.jpg");
+    position:fixed;
+    min-height: 100%;
+    min-width: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+
+.loginformbackground{
+  position: absolute;
+  background: rgb(18, 35, 105);
+  background: linear-gradient(135deg, rgb(18, 35, 105) 0%,     rgb(45, 149, 253) 100%);
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 900px;
+  width: 30%;
+  height: 102%;
+  top: -15%;
+  left: 73%;
+  margin: 100px auto;
+  border-radius: 70px;
+}
+
+.loginform{ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  max-width: 100%;
+  min-width: 300px;
+  width: 30%;
+  height: 40%;
+  margin: 220px auto;
+  background-color: #FFFFFF;
+  border-radius: 25px;
+}
+
+.title{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-family: Montserrat;font-style: normal; font-variant: normal; font-weight: 900; line-height: 15.4px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.titleIcon {
+  font-size: 32px;
+  margin-right: 10px;
+}
+
+.subtitle{
+  text-align: center;
+  font-family: Montserrat;font-style: normal; font-variant: normal; font-weight: 500; line-height: 15.4px;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.text{
+  text-align: center;
+  font-size: 0.8rem;
+  font-family: Montserrat; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+  margin-bottom: 5px;
+}
+
+
+.button{
+  border-radius: 25px;
+  width: 80%;
+  height: 60px;
+  font-family: Montserrat; font-style: normal; font-variant: normal;
+  font-size: 1.3rem;
+  color: white;
+  font-weight: 700;
+  background: rgb(18, 35, 105);
+  background: linear-gradient(135deg, rgb(18, 35, 105) 0%,     rgb(45, 149, 253) 100%);
+  border: 0px;
+  cursor: pointer;
+  transition: opacity 0.25s ease-out;
+  margin: 0;
+  
+}
+
+button:hover{
+  opacity: 0.8;
+}
