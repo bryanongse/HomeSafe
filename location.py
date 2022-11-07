@@ -132,5 +132,4 @@ def cohere(streamTxt):
 def main():
     text = record()
     cohere(text)
-
 main()
